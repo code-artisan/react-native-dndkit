@@ -32,6 +32,5 @@
     "react-native-haptic-feedback": "^2.2.0",
     "react-native-reanimated": "^3.12.1",
     "react-native-web": "*"
-  },
-  "private": true
+  }
 }
