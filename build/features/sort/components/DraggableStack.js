@@ -22,6 +22,6 @@ export const DraggableStack = ({ children, direction = "row", gap = 0, onOrderCh
         onOrderUpdate,
         shouldSwapWorklet,
     });
-    return <View style={style}>{children}</View>;
+    return React.createElement(View, { style: style }, children);
 };
 //# sourceMappingURL=DraggableStack.js.map

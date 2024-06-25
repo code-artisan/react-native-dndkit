@@ -56,8 +56,6 @@ export const Draggable = ({ children, id, data, disabled, style, activeOpacity =
         }
         return style;
     }, [id, state, activeOpacity]);
-    return (<Animated.View ref={setNodeRef} onLayout={setNodeLayout} style={[style, animatedStyle]} {...otherProps}>
-      {children}
-    </Animated.View>);
+    return (React.createElement(Animated.View, { ref: setNodeRef, onLayout: setNodeLayout, style: [style, animatedStyle], ...otherProps }, children));
 };
 //# sourceMappingURL=Draggable.js.map

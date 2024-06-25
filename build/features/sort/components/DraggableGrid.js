@@ -22,6 +22,6 @@ export const DraggableGrid = ({ children, direction = "row", gap = 0, onLayout, 
         shouldSwapWorklet,
         size,
     });
-    return <View style={style} onLayout={onLayout}>{children}</View>;
+    return React.createElement(View, { style: style, onLayout: onLayout }, children);
 };
 //# sourceMappingURL=DraggableGrid.js.map

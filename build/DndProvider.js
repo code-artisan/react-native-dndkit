@@ -297,12 +297,8 @@ export const DndProvider = forwardRef(function DndProvider({ children, springCon
         return panGesture;
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [disabled]);
-    return (<DndContext.Provider value={contextValue.current}>
-        <GestureDetector gesture={panGesture}>
-          <View ref={containerRef} collapsable={false} onLayout={onLayout} style={style} testID="view">
-            {children}
-          </View>
-        </GestureDetector>
-      </DndContext.Provider>);
+    return (React.createElement(DndContext.Provider, { value: contextValue.current },
+        React.createElement(GestureDetector, { gesture: panGesture },
+            React.createElement(View, { ref: containerRef, collapsable: false, onLayout: onLayout, style: style, testID: "view" }, children))));
 });
 //# sourceMappingURL=DndProvider.js.map
