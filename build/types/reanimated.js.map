@@ -1,0 +1,1 @@
+{"version":3,"file":"reanimated.js","sourceRoot":"","sources":["../../src/types/reanimated.ts"],"names":[],"mappings":"","sourcesContent":["import { useAnimatedReaction } from \"react-native-reanimated\";\n\nexport type DependencyList = Parameters<typeof useAnimatedReaction>[2];\n"]}

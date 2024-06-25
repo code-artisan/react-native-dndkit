@@ -1,0 +1,1 @@
+{"version":3,"file":"useSharedPoint.d.ts","sourceRoot":"","sources":["../../src/hooks/useSharedPoint.ts"],"names":[],"mappings":"AAAA,OAAO,EAAkB,KAAK,WAAW,EAAE,MAAM,yBAAyB,CAAC;AAC3E,OAAO,KAAK,EAAE,KAAK,EAAE,MAAM,UAAU,CAAC;AAEtC,MAAM,MAAM,WAAW,GAAG,KAAK,CAAC,WAAW,CAAC,MAAM,CAAC,CAAC,CAAC;AAErD,eAAO,MAAM,cAAc,MAAO,MAAM,KAAK,MAAM,KAAG,WAKrD,CAAC"}

@@ -1,9 +1,9 @@
 import React from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
 import {GestureHandlerRootView, ScrollView} from 'react-native-gesture-handler';
-import {DraggableBasicExample} from './examples/DraggableBasicExample';
-import {DraggableGridExample} from './examples/DraggableGridExample';
-import {DraggableStackExample} from './examples/DraggableStackExample';
+import {DraggableBasicExample} from './src/DraggableBasicExample';
+import {DraggableGridExample} from './src/DraggableGridExample';
+import {DraggableStackExample} from './src/DraggableStackExample';
 
 export default () => {
   return (

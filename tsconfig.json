@@ -1,9 +1,10 @@
 {
-  "extends": "expo/tsconfig.base",
+  "extends": "expo-module-scripts/tsconfig.base",
   "compilerOptions": {
-    "strict": true,
-    "paths": {
-      "react-native-dndkit": ["./src"]
-    }
-  }
+    "rootDir": "src",
+    "outDir": "build",
+    "strict": true
+  },
+  "include": ["./src"],
+  "exclude": ["./example"]
 }

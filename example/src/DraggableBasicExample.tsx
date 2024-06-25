@@ -69,7 +69,7 @@ const MyDraggable: FunctionComponent<DraggableProps> = ({
   id,
   ...otherProps
 }) => {
-  const animatedStyle = useDraggableStyle(id, ({isActive, isActing}) => {
+  const animatedStyle = useDraggableStyle(id, ({isActive, isActing}: {isActive: boolean, isActing: boolean}) => {
     'worklet';
     return {
       opacity: isActing ? 0.5 : 1,
@@ -91,7 +91,7 @@ const MyDroppable: FunctionComponent<DroppableProps> = ({
   id,
   ...otherProps
 }) => {
-  const animatedStyle = useDroppableStyle(id, ({isActive}) => {
+  const animatedStyle = useDroppableStyle(id, ({isActive}: {isActive: boolean}) => {
     'worklet';
     return {
       opacity: isActive ? 0.9 : 1,
