@@ -1,9 +1,0 @@
-{
-  "compilerOptions": {
-    "rootDir": "..",
-    "paths": {
-      "react-native-dndkit": [".."]
-    }
-  },
-  "extends": "expo/tsconfig.base"
-}
