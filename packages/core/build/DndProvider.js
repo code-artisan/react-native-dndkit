@@ -1,12 +1,18 @@
 import React, { forwardRef, useImperativeHandle, useMemo, useRef, } from "react";
 import { View, } from "react-native";
 import { Gesture, GestureDetector, State, } from "react-native-gesture-handler";
-import ReactNativeHapticFeedback from "react-native-haptic-feedback";
-import { cancelAnimation, runOnJS, runOnUI, useAnimatedReaction, useSharedValue, } from "react-native-reanimated";
+// import ReactNativeHapticFeedback, {
+//   HapticFeedbackTypes,
+// } from "react-native-haptic-feedback";
+import { cancelAnimation, runOnJS, runOnUI, 
+// useAnimatedReaction,
+useSharedValue, } from "react-native-reanimated";
 import { DndContext, } from "./DndContext";
 import { useSharedPoint } from "./hooks";
 import { animatePointWithSpring, applyOffset, getDistance, includesPoint, overlapsRectangle, } from "./utils";
-export const DndProvider = forwardRef(function DndProvider({ children, springConfig = {}, minDistance = 0, activationDelay = 0, disabled, onLayout, hapticFeedback, onDragEnd, onBegin, onUpdate, onFinalize, style, debug, }, ref) {
+export const DndProvider = forwardRef(function DndProvider({ children, springConfig = {}, minDistance = 0, activationDelay = 0, disabled, onLayout, 
+// hapticFeedback,
+onDragEnd, onBegin, onUpdate, onFinalize, style, debug, }, ref) {
     const containerRef = useRef(null);
     const draggableLayouts = useSharedValue({});
     const droppableLayouts = useSharedValue({});
@@ -22,19 +28,23 @@ export const DndProvider = forwardRef(function DndProvider({ children, springCon
     const draggableInitialOffset = useSharedPoint(0, 0);
     const draggableContentOffset = useSharedPoint(0, 0);
     const panGestureState = useSharedValue(0);
-    const runFeedback = () => {
-        if (hapticFeedback) {
-            ReactNativeHapticFeedback.trigger(hapticFeedback);
-        }
-    };
-    useAnimatedReaction(() => draggableActiveId.value, (next, prev) => {
-        if (next !== prev) {
-            // runOnJS(setActiveId)(next);
-        }
-        if (next !== null) {
-            runOnJS(runFeedback)();
-        }
-    }, []);
+    // const runFeedback = () => {
+    //   if (hapticFeedback) {
+    //     ReactNativeHapticFeedback.trigger(hapticFeedback);
+    //   }
+    // };
+    // useAnimatedReaction(
+    //   () => draggableActiveId.value,
+    //   (next, prev) => {
+    //     if (next !== prev) {
+    //       // runOnJS(setActiveId)(next);
+    //     }
+    //     if (next !== null) {
+    //       runOnJS(runFeedback)();
+    //     }
+    //   },
+    //   [draggableActiveId],
+    // );
     const contextValue = useRef({
         containerRef,
         draggableLayouts,
@@ -172,13 +182,10 @@ export const DndProvider = forwardRef(function DndProvider({ children, springCon
                     });
                     draggableStates.value[activeId].value = "dragging";
                 }
-                if (onBegin) {
-                    onBegin(event, { activeId, activeLayout });
-                }
+                onBegin?.(event, { activeId, activeLayout });
             }
         })
             .onUpdate((event) => {
-            // console.log(draggableStates.value);
             const { state, translationX, translationY } = event;
             debug && console.log("update", { state, translationX, translationY });
             // Track current state for cancellation purposes
@@ -213,14 +220,11 @@ export const DndProvider = forwardRef(function DndProvider({ children, springCon
                 x: activeOffset.x.value,
                 y: activeOffset.y.value,
             });
-            // console.log(draggableActiveLayout.value, 'draggableActiveLayout.value...');
             droppableActiveId.value = findDroppableLayoutId(draggableActiveLayout.value);
-            if (onUpdate) {
-                onUpdate(event, {
-                    activeId,
-                    activeLayout: draggableActiveLayout.value,
-                });
-            }
+            onUpdate?.(event, {
+                activeId,
+                activeLayout: draggableActiveLayout.value,
+            });
         })
             .onFinalize((event) => {
             const { state, velocityX, velocityY } = event;
@@ -258,9 +262,7 @@ export const DndProvider = forwardRef(function DndProvider({ children, springCon
                 const { value: dropActiveId } = droppableActiveId;
                 onDragEnd({
                     active: draggableOptions.value[activeId],
-                    over: dropActiveId !== null
-                        ? droppableOptions.value[dropActiveId]
-                        : null,
+                    over: dropActiveId !== null ? droppableOptions.value[dropActiveId] : null,
                 });
             }
             // Reset droppable
@@ -303,8 +305,23 @@ export const DndProvider = forwardRef(function DndProvider({ children, springCon
             panGesture.minDistance(minDistance);
         }
         return panGesture;
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [disabled]);
+    }, [
+        disabled,
+        activationDelay,
+        draggableLayouts,
+        droppableLayouts,
+        draggableOptions,
+        droppableOptions,
+        draggableOffsets,
+        draggableRestingOffsets,
+        draggablePendingId,
+        draggableActiveId,
+        droppableActiveId,
+        panGestureState,
+        draggableInitialOffset,
+        draggableActiveLayout,
+        draggableContentOffset
+    ]);
     return (React.createElement(DndContext.Provider, { value: contextValue.current },
         React.createElement(GestureDetector, { gesture: panGesture },
             React.createElement(View, { ref: containerRef, collapsable: false, onLayout: onLayout, style: style, testID: "view" }, children))));

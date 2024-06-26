@@ -21,14 +21,14 @@ import {
   PanGestureHandlerEventPayload,
   State,
 } from "react-native-gesture-handler";
-import ReactNativeHapticFeedback, {
-  HapticFeedbackTypes,
-} from "react-native-haptic-feedback";
+// import ReactNativeHapticFeedback, {
+//   HapticFeedbackTypes,
+// } from "react-native-haptic-feedback";
 import {
   cancelAnimation,
   runOnJS,
   runOnUI,
-  useAnimatedReaction,
+  // useAnimatedReaction,
   useSharedValue,
   type WithSpringConfig,
 } from "react-native-reanimated";
@@ -74,7 +74,7 @@ export type DndProviderProps = {
     event: GestureStateChangeEvent<PanGestureHandlerEventPayload>,
     meta: { activeId: UniqueIdentifier; activeLayout: LayoutRectangle },
   ) => void;
-  hapticFeedback?: HapticFeedbackTypes;
+  // hapticFeedback?: HapticFeedbackTypes;
   style?: StyleProp<ViewStyle>;
   debug?: boolean;
 };
@@ -98,7 +98,7 @@ export const DndProvider = forwardRef<
     activationDelay = 0,
     disabled,
     onLayout,
-    hapticFeedback,
+    // hapticFeedback,
     onDragEnd,
     onBegin,
     onUpdate,
@@ -124,23 +124,24 @@ export const DndProvider = forwardRef<
   const draggableContentOffset = useSharedPoint(0, 0);
   const panGestureState = useSharedValue<GestureEventPayload["state"]>(0);
 
-  const runFeedback = () => {
-    if (hapticFeedback) {
-      ReactNativeHapticFeedback.trigger(hapticFeedback);
-    }
-  };
-  useAnimatedReaction(
-    () => draggableActiveId.value,
-    (next, prev) => {
-      if (next !== prev) {
-        // runOnJS(setActiveId)(next);
-      }
-      if (next !== null) {
-        runOnJS(runFeedback)();
-      }
-    },
-    [],
-  );
+  // const runFeedback = () => {
+  //   if (hapticFeedback) {
+  //     ReactNativeHapticFeedback.trigger(hapticFeedback);
+  //   }
+  // };
+
+  // useAnimatedReaction(
+  //   () => draggableActiveId.value,
+  //   (next, prev) => {
+  //     if (next !== prev) {
+  //       // runOnJS(setActiveId)(next);
+  //     }
+  //     if (next !== null) {
+  //       runOnJS(runFeedback)();
+  //     }
+  //   },
+  //   [draggableActiveId],
+  // );
 
   const contextValue = useRef<DndContextValue>({
     containerRef,
@@ -289,13 +290,11 @@ export const DndProvider = forwardRef<
             });
             draggableStates.value[activeId].value = "dragging";
           }
-          if (onBegin) {
-            onBegin(event, { activeId, activeLayout });
-          }
+
+          onBegin?.(event, { activeId, activeLayout });
         }
       })
       .onUpdate((event) => {
-        // console.log(draggableStates.value);
         const { state, translationX, translationY } = event;
         debug && console.log("update", { state, translationX, translationY });
         // Track current state for cancellation purposes
@@ -306,6 +305,7 @@ export const DndProvider = forwardRef<
         const { value: layouts } = draggableLayouts;
         const { value: offsets } = draggableOffsets;
         // const { value: states } = draggableStates;
+
         if (activeId === null) {
           // Check if we are currently waiting for activation delay
           if (pendingId !== null) {
@@ -320,26 +320,27 @@ export const DndProvider = forwardRef<
           // Ignore item-free interactions
           return;
         }
+
         // Update our active offset to pan the active item
         const activeOffset = offsets[activeId];
         activeOffset.x.value = draggableInitialOffset.x.value + translationX;
         activeOffset.y.value = draggableInitialOffset.y.value + translationY;
+
         // Check potential droppable candidates
         const activeLayout = layouts[activeId].value;
         draggableActiveLayout.value = applyOffset(activeLayout, {
           x: activeOffset.x.value,
           y: activeOffset.y.value,
         });
-        // console.log(draggableActiveLayout.value, 'draggableActiveLayout.value...');
+
         droppableActiveId.value = findDroppableLayoutId(
           draggableActiveLayout.value,
         );
-        if (onUpdate) {
-          onUpdate(event, {
-            activeId,
-            activeLayout: draggableActiveLayout.value,
-          });
-        }
+
+        onUpdate?.(event, {
+          activeId,
+          activeLayout: draggableActiveLayout.value,
+        });
       })
       .onFinalize((event) => {
         const { state, velocityX, velocityY } = event;
@@ -377,10 +378,7 @@ export const DndProvider = forwardRef<
           const { value: dropActiveId } = droppableActiveId;
           onDragEnd({
             active: draggableOptions.value[activeId],
-            over:
-              dropActiveId !== null
-                ? droppableOptions.value[dropActiveId]
-                : null,
+            over: dropActiveId !== null ? droppableOptions.value[dropActiveId] : null,
           });
         }
         // Reset droppable
@@ -434,8 +432,23 @@ export const DndProvider = forwardRef<
     }
 
     return panGesture;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [disabled]);
+  }, [
+    disabled,
+    activationDelay,
+    draggableLayouts,
+    droppableLayouts,
+    draggableOptions,
+    droppableOptions,
+    draggableOffsets,
+    draggableRestingOffsets,
+    draggablePendingId,
+    draggableActiveId,
+    droppableActiveId,
+    panGestureState,
+    draggableInitialOffset,
+    draggableActiveLayout,
+    draggableContentOffset
+  ]);
 
   return (
     <DndContext.Provider value={contextValue.current}>

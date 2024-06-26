@@ -6,6 +6,6 @@ export const useDroppableStyle = (id, callback) => {
         const isActive = activeId.value === id;
         const isDisabled = !options.value[id]?.disabled;
         return callback({ isActive, isDisabled });
-    }, []);
+    }, [activeId, options]);
 };
 //# sourceMappingURL=useDroppableStyle.js.map

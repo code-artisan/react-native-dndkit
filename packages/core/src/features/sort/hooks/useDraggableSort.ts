@@ -99,7 +99,7 @@ export const useDraggableSort = ({
       // const delta = prevActiveLayout !== null ? nextActiveLayout[axis] - prevActiveLayout[axis] : 0;
       draggablePlaceholderIndex.value = findPlaceholderIndex(nextActiveLayout);
     },
-    [],
+    [draggablePlaceholderIndex, draggableActiveId, draggableActiveLayout],
   );
 
   // Track placeholder index changes and update the sort order
@@ -138,7 +138,7 @@ export const useDraggableSort = ({
 
       draggableSortOrder.value = nextOrder;
     },
-    [onOrderChange],
+    [onOrderChange, draggableSortOrder, draggableLastOrder, draggableActiveId, draggablePlaceholderIndex],
   );
 
   return { draggablePlaceholderIndex, draggableSortOrder };

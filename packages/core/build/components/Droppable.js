@@ -34,7 +34,7 @@ export const Droppable = ({ children, id, disabled, data, style, activeOpacity =
             Object.assign(style, animatedStyleWorklet(style, { isActive, isDisabled: !!disabled }));
         }
         return style;
-    }, [id, activeOpacity]);
+    }, [id, animatedStyleWorklet, activeOpacity, activeId]);
     return (React.createElement(Animated.View, { ref: setNodeRef, onLayout: setNodeLayout, style: [style, animatedStyle], ...otherProps }, children));
 };
 //# sourceMappingURL=Droppable.js.map

@@ -65,7 +65,7 @@ export const useDraggableSort = ({ horizontal = false, initialOrder = [], onOrde
         // const axis = direction === "row" ? "x" : "y";
         // const delta = prevActiveLayout !== null ? nextActiveLayout[axis] - prevActiveLayout[axis] : 0;
         draggablePlaceholderIndex.value = findPlaceholderIndex(nextActiveLayout);
-    }, []);
+    }, [draggablePlaceholderIndex, draggableActiveId, draggableActiveLayout]);
     // Track placeholder index changes and update the sort order
     useAnimatedReaction(() => [draggableActiveId.value, draggablePlaceholderIndex.value], (next, prev) => {
         // Ignore initial reaction
@@ -98,7 +98,7 @@ export const useDraggableSort = ({ horizontal = false, initialOrder = [], onOrde
             runOnJS(onOrderUpdate)(nextOrder, prevOrder);
         }
         draggableSortOrder.value = nextOrder;
-    }, [onOrderChange]);
+    }, [onOrderChange, draggableSortOrder, draggableLastOrder, draggableActiveId, draggablePlaceholderIndex]);
     return { draggablePlaceholderIndex, draggableSortOrder };
 };
 //# sourceMappingURL=useDraggableSort.js.map

@@ -41,13 +41,13 @@ export const Draggable = ({ children, id, data, disabled, style, activeOpacity =
                     // translateX: offset.x.value,
                     translateX: isActive
                         ? offset.x.value
-                        : withSpring(offset.x.value, { damping: 100, stiffness: 1000 }),
+                        : withSpring(offset.x.value, { damping: 100, stiffness: 100 }),
                 },
                 {
                     // translateY: offset.y.value,
                     translateY: isActive
                         ? offset.y.value
-                        : withSpring(offset.y.value, { damping: 100, stiffness: 1000 }),
+                        : withSpring(offset.y.value, { damping: 100, stiffness: 100 }),
                 },
             ],
         };
@@ -55,7 +55,7 @@ export const Draggable = ({ children, id, data, disabled, style, activeOpacity =
             Object.assign(style, animatedStyleWorklet(style, { isActive, isActing, isDisabled: !!disabled }));
         }
         return style;
-    }, [id, state, activeOpacity]);
+    }, [id, state, offset, disabled, animatedStyleWorklet, activeOpacity]);
     return (React.createElement(Animated.View, { ref: setNodeRef, onLayout: setNodeLayout, style: [style, animatedStyle], ...otherProps }, children));
 };
 //# sourceMappingURL=Draggable.js.map

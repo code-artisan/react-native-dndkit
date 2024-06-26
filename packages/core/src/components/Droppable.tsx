@@ -53,7 +53,7 @@ export const Droppable: FunctionComponent<PropsWithChildren<DroppableProps>> = (
       Object.assign(style, animatedStyleWorklet(style, { isActive, isDisabled: !!disabled }));
     }
     return style;
-  }, [id, activeOpacity]);
+  }, [id, animatedStyleWorklet, activeOpacity, activeId]);
 
   return (
     <Animated.View ref={setNodeRef} onLayout={setNodeLayout} style={[style, animatedStyle]} {...otherProps}>

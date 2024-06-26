@@ -13,7 +13,7 @@ export function useLatestSharedValue<T>(value: T, dependencies: DependencyList =
       }
       sharedValue.value = next;
     },
-    dependencies,
+    [...dependencies, sharedValue],
   );
 
   return sharedValue;

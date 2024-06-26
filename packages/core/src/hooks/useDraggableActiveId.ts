@@ -13,7 +13,7 @@ export const useDraggableActiveId = () => {
         runOnJS(setActiveId)(next);
       }
     },
-    [],
+    [draggableActiveId],
   );
   return activeId;
 };

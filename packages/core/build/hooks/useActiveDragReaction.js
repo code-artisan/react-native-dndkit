@@ -7,6 +7,6 @@ export const useActiveDragReaction = (id, callback) => {
         if (next !== prev) {
             callback(next);
         }
-    }, []);
+    }, [activeId, panGestureState]);
 };
 //# sourceMappingURL=useActiveDragReaction.js.map

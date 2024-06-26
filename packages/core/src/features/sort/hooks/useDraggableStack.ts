@@ -90,7 +90,17 @@ export const useDraggableStack = ({
       // Update the active item offset
       restingOffset[axis].value += nextActiveOffset[axis];
     },
-    [horizontal],
+    [
+      horizontal,
+      axis,
+      size,
+      worklet,
+      draggableSortOrder,
+      draggableLayouts,
+      draggableRestingOffsets,
+      draggableActiveId,
+      draggableOffsets,
+    ],
   );
 
   return { draggablePlaceholderIndex, draggableSortOrder };

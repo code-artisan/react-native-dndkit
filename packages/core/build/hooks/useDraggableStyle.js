@@ -8,6 +8,6 @@ export const useDraggableStyle = (id, callback) => {
         const isActing = state?.value === "acting";
         const isDisabled = !options.value[id]?.disabled;
         return callback({ isActive, isActing, isDisabled });
-    }, [id, state]);
+    }, [id, state, states, activeId, options]);
 };
 //# sourceMappingURL=useDraggableStyle.js.map

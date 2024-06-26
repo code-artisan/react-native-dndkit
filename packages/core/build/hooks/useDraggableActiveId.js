@@ -8,7 +8,7 @@ export const useDraggableActiveId = () => {
         if (next !== prev) {
             runOnJS(setActiveId)(next);
         }
-    }, []);
+    }, [draggableActiveId]);
     return activeId;
 };
 //# sourceMappingURL=useDraggableActiveId.js.map

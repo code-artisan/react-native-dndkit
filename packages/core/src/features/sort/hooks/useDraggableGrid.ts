@@ -93,7 +93,16 @@ export const useDraggableGrid = ({
         }
       }
     },
-    [direction, gap, size],
+    [
+      direction,
+      gap,
+      size,
+      draggableSortOrder,
+      draggableActiveId,
+      draggableOffsets,
+      draggableRestingOffsets,
+      draggableLayouts,
+    ],
   );
 
   return { draggablePlaceholderIndex, draggableSortOrder };

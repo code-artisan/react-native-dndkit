@@ -38,7 +38,7 @@ export const useDroppable = ({ id, data = {}, disabled = false }) => {
         if (next !== prev) {
             droppableOptions.value[id].disabled = disabled;
         }
-    }, [disabled]);
+    }, [disabled, droppableOptions]);
     useLayoutEffect(() => {
         const runLayoutEffect = () => {
             "worklet";

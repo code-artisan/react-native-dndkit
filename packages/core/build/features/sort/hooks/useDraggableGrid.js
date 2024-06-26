@@ -64,7 +64,16 @@ export const useDraggableGrid = ({ initialOrder, onOrderChange, onOrderUpdate, g
                     break;
             }
         }
-    }, [direction, gap, size]);
+    }, [
+        direction,
+        gap,
+        size,
+        draggableSortOrder,
+        draggableActiveId,
+        draggableOffsets,
+        draggableRestingOffsets,
+        draggableLayouts,
+    ]);
     return { draggablePlaceholderIndex, draggableSortOrder };
 };
 //# sourceMappingURL=useDraggableGrid.js.map

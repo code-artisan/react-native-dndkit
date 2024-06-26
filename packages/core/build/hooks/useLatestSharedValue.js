@@ -7,7 +7,7 @@ export function useLatestSharedValue(value, dependencies = [value]) {
             return;
         }
         sharedValue.value = next;
-    }, dependencies);
+    }, [...dependencies, sharedValue]);
     return sharedValue;
 }
 //# sourceMappingURL=useLatestSharedValue.js.map

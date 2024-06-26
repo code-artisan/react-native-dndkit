@@ -1,7 +1,6 @@
 import React from "react";
 import { LayoutChangeEvent, LayoutRectangle, StyleProp, ViewStyle } from "react-native";
 import { GestureStateChangeEvent, GestureUpdateEvent, PanGestureHandlerEventPayload } from "react-native-gesture-handler";
-import { HapticFeedbackTypes } from "react-native-haptic-feedback";
 import { type WithSpringConfig } from "react-native-reanimated";
 import { type DndContextValue, type ItemOptions } from "./DndContext";
 import type { UniqueIdentifier } from "./types";
@@ -27,7 +26,6 @@ export type DndProviderProps = {
         activeId: UniqueIdentifier;
         activeLayout: LayoutRectangle;
     }) => void;
-    hapticFeedback?: HapticFeedbackTypes;
     style?: StyleProp<ViewStyle>;
     debug?: boolean;
 };

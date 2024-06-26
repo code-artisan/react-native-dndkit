@@ -6,6 +6,6 @@ export const useActiveDropReaction = (id, callback) => {
         if (next !== prev) {
             callback(next);
         }
-    }, []);
+    }, [activeId]);
 };
 //# sourceMappingURL=useActiveDropReaction.js.map

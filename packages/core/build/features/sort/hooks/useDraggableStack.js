@@ -63,7 +63,17 @@ export const useDraggableStack = ({ initialOrder, onOrderChange, onOrderUpdate, 
         }
         // Update the active item offset
         restingOffset[axis].value += nextActiveOffset[axis];
-    }, [horizontal]);
+    }, [
+        horizontal,
+        axis,
+        size,
+        worklet,
+        draggableSortOrder,
+        draggableLayouts,
+        draggableRestingOffsets,
+        draggableActiveId,
+        draggableOffsets,
+    ]);
     return { draggablePlaceholderIndex, draggableSortOrder };
 };
 //# sourceMappingURL=useDraggableStack.js.map
