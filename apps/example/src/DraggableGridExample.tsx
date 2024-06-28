@@ -5,24 +5,40 @@ import {
   DraggableGrid,
   DraggableGridProps,
 } from 'react-native-dndkit';
-import React, {type FunctionComponent} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import React, {useMemo, useState, type FunctionComponent} from 'react';
+import {Button, StyleSheet, Text, View} from 'react-native';
 
 const GRID_SIZE = 3;
-const items: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
-const data = items.map((letter, index) => ({
-  id: `${index}-${letter}`,
-  value: letter,
-})) satisfies ObjectWithId[];
 
 export const DraggableGridExample: FunctionComponent = () => {
+  const [items, setItemList] = useState(['1', '2', '3', '4', '5', '6', '7', '8'])
+
   const onGridOrderChange: DraggableGridProps['onOrderChange'] = value => {
     console.log('onGridOrderChange', value);
   };
 
+  const onAdd = () => {
+    setItemList((state) => {
+      return [...state, (state.length + 1).toString()]
+    });
+  }
+
+  const dataSource = useMemo(() => {
+    return items.map((letter, index) => ({
+      id: letter,
+      value: letter,
+    }))
+  }, [items]);
+
+  const onRemove = (value) => {
+    setItemList((state) => {
+      return state.filter((item) => item !== value);
+    });
+  }
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>DraggableGrid Example</Text>
+      <Text style={styles.title}>DraggableGrid Example 111</Text>
       <View style={styles.body}>
         <DndProvider>
           <DraggableGrid
@@ -30,13 +46,16 @@ export const DraggableGridExample: FunctionComponent = () => {
             size={GRID_SIZE}
             style={styles.grid}
             onOrderChange={onGridOrderChange}>
-            {data.map(item => (
+            {dataSource.map(item => (
               <Draggable key={item.id} id={item.id} style={styles.draggable}>
-                <Text style={styles.text}>{item.value}</Text>
+                <Text onPress={() => onRemove(item.value)} style={styles.text}>{item.value}</Text>
               </Draggable>
             ))}
           </DraggableGrid>
         </DndProvider>
+      </View>
+      <View style={styles.footer}>
+        <Button title='add item' onPress={onAdd} />
       </View>
     </View>
   );
@@ -54,6 +73,9 @@ const styles = StyleSheet.create({
   },
   body: {
     alignItems: 'center'
+  },
+  footer: {
+    paddingVertical: 10,
   },
   grid: {
     alignItems: 'center',

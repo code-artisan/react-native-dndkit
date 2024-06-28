@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { LayoutRectangle } from "react-native";
 import { runOnJS, useAnimatedReaction, useSharedValue } from "react-native-reanimated";
 import { useDndContext } from "../../../DndContext";
@@ -33,6 +34,12 @@ export const useDraggableSort = ({
   const draggablePlaceholderIndex = useSharedValue(-1);
   const draggableLastOrder = useSharedValue<UniqueIdentifier[]>(initialOrder);
   const draggableSortOrder = useSharedValue<UniqueIdentifier[]>(initialOrder);
+
+  useEffect(() => {
+    draggablePlaceholderIndex.value = -1
+    draggableSortOrder.value = initialOrder
+    draggableLastOrder.value = initialOrder
+  }, [initialOrder])
 
   // Core placeholder index logic
   const findPlaceholderIndex = (activeLayout: LayoutRectangle): number => {
@@ -99,7 +106,7 @@ export const useDraggableSort = ({
       // const delta = prevActiveLayout !== null ? nextActiveLayout[axis] - prevActiveLayout[axis] : 0;
       draggablePlaceholderIndex.value = findPlaceholderIndex(nextActiveLayout);
     },
-    [draggablePlaceholderIndex, draggableActiveId, draggableActiveLayout],
+    [draggablePlaceholderIndex, draggableActiveId, findPlaceholderIndex, draggableActiveLayout],
   );
 
   // Track placeholder index changes and update the sort order

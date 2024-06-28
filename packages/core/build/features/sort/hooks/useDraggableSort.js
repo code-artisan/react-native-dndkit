@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { runOnJS, useAnimatedReaction, useSharedValue } from "react-native-reanimated";
 import { useDndContext } from "../../../DndContext";
 import { applyOffset, arraysEqual, centerAxis, moveArrayIndex, overlapsAxis, } from "../../../utils";
@@ -6,6 +7,11 @@ export const useDraggableSort = ({ horizontal = false, initialOrder = [], onOrde
     const draggablePlaceholderIndex = useSharedValue(-1);
     const draggableLastOrder = useSharedValue(initialOrder);
     const draggableSortOrder = useSharedValue(initialOrder);
+    useEffect(() => {
+        draggablePlaceholderIndex.value = -1;
+        draggableSortOrder.value = initialOrder;
+        draggableLastOrder.value = initialOrder;
+    }, [initialOrder]);
     // Core placeholder index logic
     const findPlaceholderIndex = (activeLayout) => {
         "worklet";
@@ -65,7 +71,7 @@ export const useDraggableSort = ({ horizontal = false, initialOrder = [], onOrde
         // const axis = direction === "row" ? "x" : "y";
         // const delta = prevActiveLayout !== null ? nextActiveLayout[axis] - prevActiveLayout[axis] : 0;
         draggablePlaceholderIndex.value = findPlaceholderIndex(nextActiveLayout);
-    }, [draggablePlaceholderIndex, draggableActiveId, draggableActiveLayout]);
+    }, [draggablePlaceholderIndex, draggableActiveId, findPlaceholderIndex, draggableActiveLayout]);
     // Track placeholder index changes and update the sort order
     useAnimatedReaction(() => [draggableActiveId.value, draggablePlaceholderIndex.value], (next, prev) => {
         // Ignore initial reaction
